@@ -1,0 +1,33 @@
+<% @posts.joins(:custom_field_values).reorder(nil).merge(CamaleonCms::CustomFieldsRelationship.reorder(nil).where(custom_field_slug: 'post-date').order(value: :desc)).decorate.each do |post| %>
+    <article class="post">
+    <div class="thumb">
+    <a href="<%= post.the_url %>"><img src=<%= post.the_thumb_url(theme_asset_url('images/thumbs/6.jpg')) %> alt="img"></a>
+    </div>
+    <div class="content">
+        <div class="cat">
+            <% if @category.present? %>
+                <a href="#"><%= @category.the_title %></a>
+            <% elsif @post_tag.present? %>
+                <a href="#"><%= @post_tag.the_title %></a>
+            <% else %>   
+                <a href="#"><%= post.the_categories.decorate.map { |tag| tag.the_title } %></a>    
+            <% end %>         
+        </div>
+        <h3><a href="<%= post.the_url %>"><%= post.the_title %></a></h3>
+        <p class="excerpt-entry"><%= post.the_excerpt %>.</p>
+        <div class="activity">
+            <span class="views">345</span><span class="comment"><a href="#">15</a></span>
+        </div>
+    </div>
+</article><!--  /.post -->
+<% end %>
+<nav class="blog-pagination justify-content-center d-flex">
+    <div class='row pagination_panel cama_ajax_request'>
+        <div class='col-md-10'>
+            <%= will_paginate(@posts, renderer: BootstrapPagination::Rails) %>
+        </div>
+        <div class='col-md-2 text-right total-items'>
+        <strong><%= I18n.t('camaleon_cms.admin.table.total', default: 'Total') %> <%= @posts.total_entries rescue @posts.count %></strong>
+        </div>
+    </div>
+</nav>

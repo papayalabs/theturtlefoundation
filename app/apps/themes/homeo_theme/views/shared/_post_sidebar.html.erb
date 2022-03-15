@@ -1,0 +1,239 @@
+<!-- Fullfil the names and tags from admin -->
+
+<% section_names = [] %>
+<% section_tags = [] %>
+<% current_theme.the_fields_grouped(['section_name', 'section_tag_slug','section_position']).each do |group| %>
+	<% section_names[group['section_position'][0].to_i] = group['section_name'][0] %>
+	<% section_tags[group['section_position'][0].to_i] = group['section_tag_slug'][0] %>
+<% end %>	
+
+<!----------------------------------- Recent Posts ------------------------------------->	
+<% number_of_posts = 3 %>
+<div class="widget widget-recent gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+    <h5 class="widget-title"><%= current_theme.the_field('common_word_recents', 'Recents') %></h5>
+    <ul>
+        <% current_site.the_posts('post').joins(:custom_field_values).reorder(nil)
+            .merge(CamaleonCms::CustomFieldsRelationship.reorder(nil)
+            .where(custom_field_slug: 'post-date').order(value: :desc))
+            .limit(number_of_posts).decorate.each do |post| %>
+            <li>
+                <div class="thumb">
+                    <a href=""><img src=<%= post.the_thumb_url(theme_asset_url('images/thumbs/2.jpg')) %> alt="img"></a>
+                </div>
+                <div class="content">
+                    <h3><a href="<%= post.the_url %>"><%= post.the_title %></a></h3>
+                    <%= post.the_field('date', '') %>
+                    <% months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"] %>
+                    <% day = DateTime.parse(post.the_field('post-date', '').to_s+" 12:00AM").day %>
+                    <% month = months[DateTime.parse(post.the_field('post-date', '').to_s+" 12:00AM").month.to_i - 1] %>
+                    <% year = DateTime.parse(post.the_field('post-date', '').to_s+" 12:00AM").year %>
+                    <div class="date"><%= month+" "+day.to_s+","+year.to_s %></div>
+                </div>
+            </li>
+        <% end %>
+    </ul>
+</div><!-- /.widget-recent -->
+<!------------------------------ End of Recent Posts --------------------------------->
+
+<!-------------------------------- Advertisement ------------------------------------->
+<div class="widget widget-ads gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+    <a href="#"><img src="images/ad.jpg" alt="image"></a>
+    <p class="text-ad">Advertisement</p>
+</div><!-- /.widget-ads -->
+<!----------------------------- End of Advertisement --------------------------------->
+
+<!------------------------------------- Section #4 ------------------------------------->				
+<% name = section_names[4] %>
+<% tag = section_tags[4] %>
+<% number_of_posts = 5 %>
+
+<div class="widget widget-most-popular gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+    <h5 class="widget-title">5 Most Popular</h5>
+    <ul>
+        <% current_site.the_posts('post').joins(:custom_field_values).reorder(nil)
+            .merge(CamaleonCms::CustomFieldsRelationship.reorder(nil)
+            .where(custom_field_slug: 'post-date')
+            .joins('LEFT JOIN "term_relationships" as "tag_rel" ON "posts"."id" = tag_rel."objectid" LEFT JOIN "term_taxonomy" as "tags" on tags.id = tag_rel.term_taxonomy_id')
+            .where(tags:{slug: tag}).order(value: :desc))
+            .limit(number_of_posts).decorate.each_with_index do |post,index| %>
+            <li>
+                <div class="order"><%= index+1 %></div>
+                <p><a href="<%= post.the_url %>"><%= post.the_title %></a></p>
+            </li>
+        <% end %>
+    </ul>
+</div><!-- /.widget-popular -->
+<!---------------------------------- End of Section #4 --------------------------------->
+
+<!-------------------------------- Comments ------------------------------------->				
+<div class="widget widget-tabs gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+    <div class="tabs">
+        <ul class="menu-tab">
+            <li class="active"><a href="#">Comments</a></li>
+                <li><a href="#">Popular</a></li>
+                <li><a href="#">Tags</a></li>
+        </ul><!-- /.menu-tab -->
+        <div class="content-tab">
+                <div class="content">
+                <ul class="comments">
+                    <li>
+                        <div class="avatar">
+                            <a href="#"><img src="images/user.jpg" alt="image"></a>
+                        </div>
+                        <p><a href="#">Jack</a> on <a href="#">I think your best bet would be to start or join a startup.</a> 2 hours</p>
+                    </li>	
+                    <li>
+                        <div class="avatar">
+                            <a href="#"><img src="images/user.jpg" alt="image"></a>
+                        </div>
+                        <p><a href="#">Jack</a> on <a href="#">I think your best bet would be to start or join a startup.</a> 2 hours</p>
+                    </li>
+                    <li>
+                        <div class="avatar">
+                            <a href="#"><img src="images/user.jpg" alt="image"></a>
+                        </div>
+                        <p><a href="#">Jack</a> on <a href="#">I think your best bet would be to start or join a startup.</a> 2 hours</p>
+                    </li>
+                    <li>
+                        <div class="avatar">
+                            <a href="#"><img src="images/user.jpg" alt="image"></a>
+                        </div>
+                        <p><a href="#">Jack</a> on <a href="#">I think your best bet would be to start or join a startup.</a> 2 hours</p>
+                    </li>
+                    <li>
+                        <div class="avatar">
+                            <a href="#"><img src="images/user.jpg" alt="image"></a>
+                        </div>
+                        <p><a href="#">Jack</a> on <a href="#">I think your best bet would be to start or join a startup.</a> 2 hours</p>
+                    </li>
+                </ul>
+                </div><!-- /.comments -->
+                <div class="content">
+                <ul class="pop-posts">
+                    <li>
+                        <div class="thumb">
+                            <a href="#"><img alt="" src="<%= theme_asset_url("images/thumbs/1.jpg") %>"></a>
+                        </div>
+                        <div class="text">
+                            <a href="#">If you wanted to get rich, how would you do it?</a>
+                            <i>Aug 1, 2014</i>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="thumb">
+                            <a href="#"><img alt="" src="<%= theme_asset_url("images/thumbs/1.jpg") %>"></a>
+                        </div>
+                        <div class="text">
+                            <a href="#">If you wanted to get rich, how would you do it?</a>
+                            <i>Aug 1, 2014</i>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="thumb">
+                            <a href="#"><img alt="" src="<%= theme_asset_url("images/thumbs/1.jpg") %>"></a>
+                        </div>
+                        <div class="text">
+                            <a href="#">If you wanted to get rich, how would you do it?</a>
+                            <i>Aug 1, 2014</i>
+                        </div> 
+                    </li>
+                    <li>
+                        <div class="thumb">
+                            <a href="#"><img alt="" src="<%= theme_asset_url("images/thumbs/1.jpg") %>"></a>
+                        </div>
+                        <div class="text">
+                            <a href="#">If you wanted to get rich, how would you do it?</a>
+                            <i>Aug 1, 2014</i>
+                        </div> 
+                    </li>
+                    <li>
+                        <div class="thumb">
+                            <a href="#"><img alt="" src="<%= theme_asset_url("images/thumbs/1.jpg") %>"></a>
+                        </div>
+                        <div class="text">
+                            <a href="#">If you wanted to get rich, how would you do it?</a>
+                            <i>Aug 1, 2014</i>
+                        </div>
+                    </li>
+                </ul>
+                </div><!-- /.comments -->
+                <div class="content">
+                <div class="tags">
+                    <a href="#">business</a>
+                    <a href="#">themeforest</a>
+                    <a href="#">good news</a>
+                    <a href="#">startups</a>
+                    <a href="#">red</a>
+                    <a href="#">politics</a>
+                    <a href="#">europe</a>
+                    <a href="#">asia</a>
+                </div>
+                </div><!-- /.comments -->
+        </div><!-- /.content-tab -->
+    </div><!-- /.tabs -->
+</div><!-- /.widget-tabs -->
+<!------------------------------ End of Comments --------------------------------->
+
+<!------------------------------- Social Networks --------------------------------->
+<div class="widget widget-follow-us gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+    <h5 class="widget-title text-dark">Follow Us</h5>
+    <div class="socials">
+        <a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
+        <a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
+        <a class="google" href="#"><i class="fa fa-google-plus"></i></a>
+        <a class="youtube" href="#"><i class="fa fa-youtube"></i></a>
+        <a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+        <a class="tumblr" href="#"><i class="fa fa-tumblr"></i></a>
+    </div>
+</div><!-- /.widget-follow-us -->
+<!---------------------------- End of Social Networks ------------------------------>
+
+<!---------------------------------- Archives -------------------------------------->
+<div class="widget widget-categories gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+    <h5 class="widget-title">Archives</h5>
+    <% dates = current_site.the_posts('post').joins(:custom_field_values).reorder(nil)
+        .merge(CamaleonCms::CustomFieldsRelationship.reorder(nil)
+        .where(custom_field_slug: 'post-date'))
+        .map { |post| post.custom_field_values[0].value } %>
+    <% hash = {}
+        dates.each do |date|
+            if date.present?
+                year, month = Date.parse(date).strftime('%Y,%B').split(',')
+                hash[year] ||= {}
+                hash[year][month] = hash[year][month].to_a << date
+            end
+        end
+    %>
+
+    <ul class="cat-list">
+        <% now = DateTime.now %>
+        <% 100.times.each do %>
+            <% month = now.strftime('%B') %>
+            <% year = now.strftime('%Y') %>
+            <% if hash[year].present? && hash[year][month].present? %>
+                <li><a href="#"><%= month+" "+year %><span>(<%= hash[year][month].count %>)</span></a></li>
+            <% end %>
+            <% now = now << 1 %>
+        <% end %>
+    </ul>
+</div><!-- /.widget-categories -->
+<!-------------------------------- End of Archives --------------------------------->
+
+<!---------------------------------- Newsletter ------------------------------------>
+<div class="widget widget-subscribe gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+    <h5 class="widget-title">Good News Newsetter</h5>
+    <p>Subscribe to our email newsletter for good news, sent out every Monday.</p>
+    <form method="post" action="#" id="subscribe-form" data-mailchimp="true">
+        <div id="subscribe-content">
+            <div class="input">
+                <input type="text" id="subscribe-email" name="subscribe-email" placeholder="Email">
+            </div>
+            <div class="button">
+                <button type="button" id="subscribe-button" class="" title="Subscribe now">Subscribe</button>
+            </div>
+        </div>
+        <div id="subscribe-msg"></div>
+    </form>
+</div><!-- /.widget-subscribe -->
+<!-------------------------------- End of Newsletter ------------------------------->
+

@@ -1,0 +1,14 @@
+{
+  "name" : "Homeo Theme",
+  "description" : "",
+  "thumb" : "images/image.png",
+  "helpers": [
+    "Themes::HomeoTheme::MainHelper"
+  ],
+  "hooks": {
+    "on_active": ["homeo_theme_on_install_theme"],
+    "on_inactive": ["homeo_theme_on_uninstall_theme"],
+    "on_theme_settings": ["homeo_theme_settings"]
+    //here all your hooks
+  }
+}

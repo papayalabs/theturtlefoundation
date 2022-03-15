@@ -1,0 +1,70 @@
+<!--? Hero Start -->
+  <div class="slider-area2">
+    <div class="slider-height2 d-flex align-items-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="hero-cap hero-cap2 pt-70">
+              <h2><%= current_theme.the_field('common_word_details', 'Details') %></h2>
+              <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="/"><%= current_theme.the_field('common_word_news', 'News') %></a></li>
+                      <li class="breadcrumb-item"><a href="#"><%= @post.the_title %></a></li> 
+                  </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Hero End -->
+  <!--? Blog Area Start -->
+  <section class="blog_area single-post-area section-padding">
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-8 posts-list">
+      <div class="single-post">
+       <div class="feature-img">
+        <img class="img-fluid" src=<%= @post.the_thumb_url(theme_asset_url('img/blog/single_blog_1.png')) %> alt="">
+      </div>
+      <div class="blog_details">
+        <h2 style="color: #2d2d2d;"><%= @post.the_title %>
+       </h2>
+       <ul class="blog-info-link mt-3 mb-4">
+         <li><a href="#"><i class="fa fa-user"></i><%= @post.the_author.fullname %></a></li>
+         <li><a href="#"><i class="fa fa-comments"></i><%= @post.the_comments.count %> Comments</a></li>
+       </ul>
+       <p class="excert">
+         <%= @post.the_excerpt %>
+       </p>
+       <p>
+         <%= raw @post.the_content %>
+     </p>
+   </div>
+  </div>
+  <div class="navigation-top">
+    <!-- %= render partial: 'partials/single_likes_and_social' % -->
+    <div class="navigation-area">
+      <!-- %= render partial: 'partials/single_arrows' % -->
+    </div>
+  </div>
+  <div class="blog-author">
+    <div class="media align-items-center">
+      <img src=<%= @post.the_author.the_avatar %> alt="">
+      <div class="media-body">
+        <a href="#">
+          <h4><%= @post.the_author.fullname %></h4>
+        </a>
+        <p><%= @post.the_author.the_slogan %></p>
+      </div>
+    </div>
+  </div>
+  <!-- %= render partial: 'partials/single_comments' % -->
+</div>
+<div class="col-lg-4">
+  <%= render partial: 'partials/sidebar' %>
+</div> 
+</div>
+</div>
+</section>

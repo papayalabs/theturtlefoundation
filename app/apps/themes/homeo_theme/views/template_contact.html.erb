@@ -1,0 +1,71 @@
+
+<!--?  Contact Area start  -->
+<!-- Main -->
+<section id="main" class="contact-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="content-left">
+                    <h2><%= current_theme.the_field('home_main_get_in_touch', 'Get in touch') %></h2>
+                    <form id="contact-form" class="contact-form" method="post" action="./contact/includes/contact-process.php">
+                        <div class="note"></div>
+                        <div class="input-wrap">
+                            <input type="text" value="" tabindex="1" placeholder="Name *" name="name" id="name">
+                        </div>
+                        <div class="input-wrap last">
+                            <input type="text" value="" tabindex="1" placeholder="Second Name" name="secondname" id="second-name">
+                        </div>
+                        <div class="input-wrap">
+                            <input type="text" value="" tabindex="3" placeholder="Email *" name="email" id="email">
+                        </div>
+                        <div class="input-wrap last">
+                            <input type="text" value="" tabindex="4" placeholder="Website" name="website" id="website">
+                        </div>
+                        <div class="message-wrap">
+                            <textarea class="" tabindex="5" placeholder="Message *" name="message" id="message"></textarea>
+                        </div>
+                        <div class="send-wrap">
+                            <input type="submit" value="Submit" id="submit" name="submit" class="submit">
+                        </div>
+                    </form><!-- /.comment-form -->
+                </div><!-- /.content-left -->
+            </div><!-- /.col-md-9 -->
+            <div class="col-md-3">
+                <div class="content-right">
+                    <h2>Contacts</h2>
+                    <div class="contact-info">
+                        <p class="title">Main Office:</p>
+                        <p><%= current_theme.get_option('address_info', 'New York') %></p>
+                        <p><%= current_theme.get_option('phone_info', '58 (0281) 2810000') %></p>
+                        <p>Email: <%= current_theme.get_option('email_info', 'default_email@example.com') %></p>
+                    </div>
+                    <div class="contact-info">
+                        <p class="title">Secondary Office:</p>
+                        <p><%= current_theme.get_option('address_info', 'New York') %></p>
+                        <p><%= current_theme.get_option('phone_info', '58 (0281) 2810000') %></p>
+                        <p>Email: <%= current_theme.get_option('email_info', 'default_email@example.com') %></p>
+                    </div>
+                    <div class="contact-info">
+                        <p class="title">Business Hours:</p>
+                        <p>Monday - Friday: 08:00 - 17:59</p>
+                        <p>Saturday - Sunday: 09:00 - 13:59</p>
+                        <ul class="contact-social">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>		
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                </div><!-- /.content-right -->
+            </div><!-- /.col-md-3 -->
+            <div class="col-md-12">
+                <h2 class="title-map">On The Map</h2>
+                <div id="map" style="width: 100%; height: 550px">
+                    <!-- Google Map -->
+                    <iframe src="<%= current_theme.get_option('map_url', 'https://maps.google.com/maps?q=Lecheria&t=&z=13&ie=UTF8&iwloc=&output=embed') %>"  width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">></iframe>
+                    <!-- Google Map end --> 
+                </div><!-- /map -->
+            </div><!-- /.col-md-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section>

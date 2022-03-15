@@ -1,0 +1,12 @@
+<% if current_user.type == "Admin" %>
+  <li><%= link_to t(:dashboard), administration_root_path, :class => "button" %></span></li>
+  <li><%= link_to t(:users), administration_users_path, :class => "button" %></li>
+  <li><%= link_to t(:articles), administration_articles_path, :class => "button" %></li>							
+  <li><%= link_to t(:images), administration_images_path, :class => "button" %></li>
+  <li><%= link_to t(:categories), administration_categories_path, :class => "button" %></li>
+  <li><%= link_to t(:tags), administration_tags_path, :class => "button" %></li>
+<% else %>
+							<li><%= link_to "My Wallet", current_user.is_a?(Doctor) ? wallet_doctor_path(:id => current_user.id) : wallet_patient_path(:id => current_user.id), :class => "button" %></li>
+  <li><%= link_to "My Profile", current_user.is_a?(Doctor) ? edit_doctor_path(:id => current_user.id) : edit_patient_path(:id => current_user.id), :class => "button" %></li>
+	<li><%= link_to "My Articles", current_user.is_a?(Doctor) ? articles_path : articles_path, :class => "button" %></li>
+<% end %>

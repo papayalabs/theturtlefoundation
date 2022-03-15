@@ -1,0 +1,81 @@
+
+<!-- slider Area Start-->
+<div class="slider-area position-relative">
+    <div class="slider-active dot-style">
+        <!-- Single Slider -->
+        <% current_theme.the_fields_grouped(['home_slider_title', 'home_slider_description','home_slider_display_button','home_slider_button_description','home_slider_bg_image','home_slider_button_url']).each do |group| %>
+            <div class="single-slider hero-overly slider-height d-flex align-items-center" style="background-image:url(<%= group['home_slider_bg_image'][0] %>);">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-10">
+                            <div class="hero__caption">
+                                <h1 data-animation="fadeInUp" data-delay=".2s"><%= group['home_slider_title'][0] %></h1>
+                                <P data-animation="fadeInUp" data-delay=".4s"><%= group['home_slider_description'][0] %></P>
+                                <!-- Hero-btn -->
+                                <% puts group.inspect %>
+                                <% if group['home_slider_display_button'] %>
+                                    <div class="hero__btn">
+                                        <a href=<%= group['home_slider_button_url'][0] %> class="hero-btn mb-10"  data-animation="fadeInUp" data-delay=".8s"><%= group['home_slider_button_description'][0] %></a>
+                                    </div>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
+<!-- slider Area End-->
+<!--? Visit Our Tailor Start -->
+<div class="visit-tailor-area fix">
+    <!--Right Contents  -->
+    <div class="tailor-offers"></div>
+    <!-- left Contents -->
+    <div class="tailor-details">
+      <%= raw current_theme.the_field('home_main_about', 'About us in the main') %>
+    </div>
+</div>
+<!-- Visit Our Tailor End -->
+</br>
+</br>
+</br>
+</br>
+        
+<!-- About Area End -->
+<!-- Our Cases End -->
+<!--? Blog Area Start -->
+<section class="home-blog-area pb-padding">
+    <div class="container">
+        <!-- Section Tittle -->
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-9 col-md-11">
+                <div class="section-tittle text-center mb-90">
+                    <h2><%= current_theme.the_field('home_main_news_title', 'Title of news') %></h2>
+                    <p><%= raw current_theme.the_field('home_main_news_description', 'Description of news') %></p>
+                </div>
+            </div>
+        </div>
+
+            <% current_site.the_posts('post').joins(:custom_field_values).reorder(nil).merge(CamaleonCms::CustomFieldsRelationship.reorder(nil).where(custom_field_slug: 'post-date').order(value: :desc)).limit(6).decorate.each_slice(2).to_a.each do |posts| %>
+                <div class="row">
+                    <% posts.each_with_index do |post, index| %>
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                            <div class="home-blog-single mb-30">
+                                <div class="blog-img-cap">
+                                    <div class="blog-img">
+                                        <img src="<%= post.the_thumb_url(theme_asset_url('img/blog/single_blog_1.png')) %>" alt="">
+                                    </div>
+                                    <div class="blog-cap">
+                                        <h3><a href="<%= post.the_url %>"</a><%= post.the_title %></a></h3>
+                                        <p><%= post.the_excerpt %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+    </div>
+</section>
+<!-- Blog Area End -->

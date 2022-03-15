@@ -1,0 +1,28 @@
+   	<!-- Header -->
+   	<header id="header" class="header">
+		<div class="header-wrap">
+		 <div class="container">
+		    <div class="row">
+				<div class="col-md-9">
+					<nav id="mainnav" class="mainnav">
+						<ul class="menu">
+							<li><%= link_to "My Wallet", current_user.is_a?(Doctor) ? wallet_doctor_path(:id => current_user.id) : wallet_patient_path(:id => current_user.id), :class => "button" %></li>
+							<li><%= link_to "My Profile", current_user.is_a?(Doctor) ? edit_doctor_path(:id => current_user.id) : edit_patient_path(:id => current_user.id), :class => "button" %></li>
+							<li><%= link_to "My Articles", current_user.is_a?(Doctor) ? articles_path : articles_path, :class => "button" %></li>
+						</ul><!-- /.menu -->
+					</nav><!-- /nav -->
+				</div><!-- /.col-md-9 -->
+				<div class="col-md-3">
+					<div class="search-wrap">
+						<div class="search-icon"></div><!-- //mobile search button -->
+						<form action="#" id="searchform" class="search-form" method="get" role="search">
+							<input type="text" id="s" placeholder="Search" class="search-field">
+							<input type="submit" value="&#xf002;" id="searchsubmit" class="search-submit">
+							<a class="search-close" href="#"><i class="fa fa-times-circle"></i></a>
+						</form>
+					</div><!-- /.search-wrap -->
+				</div><!-- /.col-md-3 -->
+		    </div><!-- /.row -->
+		 </div><!-- /.container -->
+		</div><!-- /.header-wrap -->
+	</header>

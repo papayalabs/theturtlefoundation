@@ -1,0 +1,14 @@
+{
+  "name" : "Turtle Theme",
+  "description" : "",
+  "thumb" : "img/image.png",
+  "helpers": [
+    "Themes::TurtleTheme::MainHelper"
+  ],
+  "hooks": {
+    "on_active": ["turtle_theme_on_install_theme"],
+    "on_inactive": ["turtle_theme_on_uninstall_theme"],
+    "on_theme_settings": ["turtle_theme_settings"]
+    //here all your hooks
+  }
+}
