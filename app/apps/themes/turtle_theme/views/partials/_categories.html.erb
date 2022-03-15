@@ -1,0 +1,5 @@
+<% current_site.the_categories.decorate.each do |item| %>
+    <% if item.the_title != 'Uncategorized' %>
+    <li><a href="<%= item.the_url %>" class="d-flex"><p><%= item.the_title %></p></a></li>
+    <% end %>
+<% end %>

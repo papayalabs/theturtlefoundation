@@ -41,9 +41,7 @@
                         <div class="footer-tittle">
                             <h4><%= current_theme.the_field('home_main_categories', 'Categories') %></h4>
                             <ul>
-                            <% current_site.the_categories.decorate.each do |item| %>
-                                <li><a href="<%= item.the_url %>"><%= item.the_title %></a></li>
-                            <% end %>
+                                <%= render partial: 'partials/categories' %>
                             </ul>
                         </div>
                     </div>
