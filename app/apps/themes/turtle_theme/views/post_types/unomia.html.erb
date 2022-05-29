@@ -1,0 +1,28 @@
+<div class="our-cases-area section-padding30">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-10 ">
+                <!-- Section Tittle -->
+                <div class="section-tittle text-center mb-80">
+                    <h2><%= raw current_theme.the_field('unomia_title', 'Unomia Title') %></h2>
+                    <p class="pl-20 pr-20"><%= raw current_theme.the_field('unomia_description', 'Unomia Description') %></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        <% @posts.decorate.each do |post| %>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-cases mb-40">
+                    <div class="cases-img">
+                        <img src="<%= post.the_thumb_url(theme_asset_url('img/blog/single_blog_1.png')) %>" alt="">
+                    </div>
+                    <div class="cases-caption">
+                        <h3><a href="<%= post.the_url %>"><%= post.the_title %></a></h3>
+                        <p><%= post.the_excerpt %></p>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+        </div>
+    </div>
+</div>
