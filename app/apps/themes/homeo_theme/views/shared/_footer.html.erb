@@ -30,9 +30,7 @@
 						<div class="widget widget-list">
 							<h5 class="widget-title"><%= current_theme.the_field('common_word_categories', 'Categories') %></h5>
 							<ul class="links-list">
-								<% current_site.the_categories.decorate.each do |item| %>
-									<li><a href="<%= item.the_url %>"><%= item.the_title %></a></li>
-								<% end %>
+								<%= render partial: 'shared/categories' %>
 							</ul>
 						</div><!-- /.widget-list -->
 					</div><!-- /.col-md-2 -->
