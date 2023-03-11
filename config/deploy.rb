@@ -57,25 +57,25 @@ set :unicorn_config_path, "/var/www/theturtlefoundation/shared/config/unicorn.rb
 #    after :finishing, 'deploy:cleanup'
 #  end
 
-#namespace :unicorn do
-#  desc 'Stop application'
-#  task :stop do
-#    on roles(:app) do
-#      puts "Stoping Unicorn..."
-#      sudo "service capistrano_unicorn_#{fetch(:application)} stop"
-#    end
-#  end
-#end
+namespace :unicorn do
+  desc 'Stop application'
+  task :stop do
+    on roles(:app) do
+      puts "Stoping Unicorn..."
+      sudo "kill -9 $(pgrep -f #{fetch(:unicorn_config_path)} )"
+    end
+  end
+end
 
-#namespace :unicorn do
-#    desc 'Start application'
-#    task :start do
-#      on roles(:app) do
-#        puts "Starting Unicorn..."
-#        sudo "service capistrano_unicorn_#{fetch(:application)} start"
-#      end
-#    end
-#end
+namespace :unicorn do
+    desc 'Start application'
+    task :start do
+      on roles(:app) do
+        puts "Starting Unicorn..."
+        execute "cd #{fetch(:deploy_to)}/current/"; "bundle exec unicorn -c #{fetch(:unicorn_config_path)} -E production -D"
+      end
+    end
+end
 
 after 'deploy:publishing', 'deploy:restart'
 namespace :deploy do
