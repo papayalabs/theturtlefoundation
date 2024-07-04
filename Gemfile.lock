@@ -1,5 +1,6 @@
-PATH
-  remote: /Users/papayalabs/Github/camaleon-cms
+GIT
+  remote: https://github.com/papayalabs/camaleon-cms-7.git
+  revision: df40c487869d2cd66fa52b6f6f0b6fc19b24e914
   specs:
     camaleon_cms (2.7.5)
       addressable

@@ -76,7 +76,7 @@ group :test do
 
 end
 
-gem "camaleon_cms", path: "/Users/papayalabs/Github/camaleon-cms" #github: 'papayalabs/camaleon-cms-7' # latest development version 
+gem "camaleon_cms", github: 'papayalabs/camaleon-cms-7' #path: "/Users/papayalabs/Github/camaleon-cms" #' # latest development version 
 
 
 #################### Camaleon CMS include all gems for plugins and themes #################### 
