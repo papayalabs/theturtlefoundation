@@ -1,7 +1,7 @@
 lock "~> 3.19.0"
 
 set :application, "theturtlefoundation"
-set :repo_url, "git@github.com:papayalabs/theturtlefoundation_new.git"
+set :repo_url, "git@github.com:papayalabs/theturtlefoundation7.git"
 
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'certs'
 append :linked_files, 'config/database.yml', 'config/secrets.yml', 'config/aws.yml', 'config/unicorn.rb'
