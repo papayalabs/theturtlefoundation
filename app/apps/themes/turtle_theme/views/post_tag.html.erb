@@ -1,0 +1,37 @@
+<!--? Hero Start -->
+<div class="slider-area2">
+    <div class="slider-height2 d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap hero-cap2 pt-70">
+                        <h2><%= @post_tag.the_title %></h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/"><%= current_theme.the_field('common_word_tags', 'Tags') %></a></li>
+                                <li class="breadcrumb-item"><a href="#"><%= @post_tag.the_title %></a></li> 
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero End -->
+<!--? Blog Area Start-->
+<section class="blog_area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0">
+                <div class="blog_left_sidebar">
+                    <%= render partial: 'partials/post_list' %>
+                </div>
+            </div>
+            <div class="col-lg-4">
+               <%= render partial: 'partials/sidebar' %>
+            </div>       
+        </div>
+    </div>
+</section>
+<!-- Blog Area End -->

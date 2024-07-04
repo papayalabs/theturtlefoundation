@@ -1,0 +1,100 @@
+<section id="main">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="post-wrap posts post-single">
+          <article class="post">
+            <div class="head-post">
+              <h2><%= @post.the_title %></h2>             
+              <img class="img-fluid" src=<%= @post.the_thumb_url(theme_asset_url('images/thumbs/9.jpg')) %> alt="">
+              </br>
+              </br>
+              <p><%= @post.the_excerpt %></p>
+              <div class="meta">
+                <span class="author">By <a href="#"><%= @post.the_author.fullname %></a></span>
+                <span class="time">Published on <%= @post.created_at.strftime("%b %d, %Y") %></span>
+              </div>
+            </div><!-- /.head-post -->
+            <div class="body-post">
+              <div class="share-post">
+                <ul>
+                  <li class="count-share"><span class="numb">23</span><span>Heals</span></li>
+                  <li class="email"><a href="">Email</a></li>
+                  <li class="facebook"><a href="">Facebook</a></li>
+                  <li class="twitter"><a href="">Twitter</a></li>
+                  <li class="more"><a href="">Heals</a></li>
+                </ul>
+              </div><!-- /.share-post -->
+              <div class="main-post">
+                <div class="entry-post">
+                  <%= raw @post.the_content %>
+                </div><!-- /.entry-post -->
+                <div class="help-post">
+                  <div class="helpful">
+                    <a class="like" href="#">I found this helpful </a>
+                    <a class="dislike" href="#">I did not find this helpful</a>
+                  </div>
+                  <div class="tags">
+                    <% @post.the_tags.decorate.each do |tag| %>
+                      <a href="<%= tag.the_url %>"><%= tag.the_title %></a>
+                    <% end %>
+                  </div>
+                </div><!-- /.help-post -->
+                <div class="author-post">
+                  <div class="avatar-author">
+                    <div style="margin-top: 30px;text-align:center">
+                      <%= image_tag @post.the_author.the_avatar, class: "img-circle"	%>
+                    </div>
+                  </div>
+                  <div class="info-author">
+                    <h4><%= @post.the_author.fullname %></h4>
+                    <p><%= @post.the_author.the_slogan %></p>
+                  </div>
+                </div>
+                <div class="comment-post">
+					        <div class="comments-list">
+					            <h4 class="title"><%= @post.the_comments.count %> Comments</h4>
+											<ul>
+                        <% @post.comments.each_with_index do |comment, index| %>
+                          <li>
+                              <article class="comment">
+                                <div class="comment-order"><%= index + 1 %></div>
+                                  <div class="avatar">
+                                    <%= image_tag comment.user.avatar.url(:small), class: "img-circle"	%>
+                                  </div>
+                                  <div class="comment-text">
+                                    <div class="comment-head">
+                                      <span class="author"><%= comment.user.name %></span>
+                                      <span class="date"><%= comment.created_at %></span>
+                                      <span class="reply"><a href="#">Reply</a></span>
+                                    </div>
+                                    <p class="comment-body"><%= comment.message %></p>
+                                  </div>                     
+                              </article><!-- /.comment -->
+                          </li>
+                        <% end %>												
+											</ul>
+					          </div><!-- /.comments-list -->
+                    <% if false %>
+                      <div id="respond" class="comment-respond">
+                        <h4 class="title">Join the Conversation</h4>
+                        <%= form_for Comment.new, :html => {:id => 'comment_form',  :class => 'comment_form', :multipart => true } do |f| %>
+                          <%= hidden_field_tag "article_id", @post.id %>
+                          <div class="message-comment">
+                            <%= f.text_area :message, :class => "input-text" %>
+                            </div>
+                            <div class="submit-comment">
+                            <input class="send-btn gn-button" type="submit" value="Send" id="submit-comment" name="submit-comment">
+                          </div>
+                        <% end %>
+                      </div><!-- /#respond -->
+                    <% end %>
+					        </div><!-- /.comment-post -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

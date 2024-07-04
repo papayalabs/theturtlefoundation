@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<!-- Basic Page Needs -->
+	<meta charset="utf-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+	<title>Homeoagora</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <%= stylesheet_link_tag "application" %>	
+
+	<!-- Bootstrap  -->
+    <%= stylesheet_link_tag "bootstrap" %>	
+
+	<!-- Theme Style -->
+    <%= stylesheet_link_tag "style" %>
+
+	<!-- Colors -->
+    <%= stylesheet_link_tag "color" %>
+	   
+	<!-- Animation Style -->
+    <%= stylesheet_link_tag "animate" %>
+	
+	<!-- Font Awesome -->
+    <%= stylesheet_link_tag "font-awesome" %>
+	
+	<!-- Javascript -->
+	<%= javascript_include_tag "jquery" %>
+	<%= javascript_include_tag "main" %>
+	<%= javascript_include_tag "select2" %>
+	<%= javascript_include_tag "external/bootstrap.min" %>
+	<%= javascript_include_tag "external/jquery.doubletaptogo" %>
+	<%= javascript_include_tag "external/jquery-waypoints" %>
+  <%= javascript_include_tag "external/jquery.flexslider" %>
+  <%= javascript_include_tag "external/jquery.easing" %>	
+	<%= javascript_include_tag "external/matchMedia" %>
+	<%= javascript_include_tag "external/smoothscroll" %>
+	<%= javascript_include_tag "external/qrcode" %>	
+	
+	<!-- Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet' type='text/css'>
+
+	<!-- Favicon and touch icons  -->
+	<link href="icon/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon-precomposed" sizes="144x144">
+	<link href="icon/apple-touch-icon-114-precomposed.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+	<link href="icon/apple-touch-icon-72-precomposed.png" rel="apple-touch-icon-precomposed" sizes="72x72">
+	<link href="icon/apple-touch-icon-57-precomposed.png" rel="apple-touch-icon-precomposed">
+	<link href="icon/favicon.png" rel="shortcut icon">
+
+	<!--[if lt IE 9]>
+		<script src="javascript/html5shiv.js"></script>
+		<script src="javascript/respond.min.js"></script>
+	<![endif]-->	  
+
+    <%= csrf_meta_tags %>
+
+    <%= yield :head %>
+
+  </head>
+  <body>
+    <%= render "shared/google_tag_manager" if Rails.env.production? %>
+    <%= render "shared/header" %>
+    <%= render "shared/app_navigation" %>	
+    <%= render "shared/messages" %>
+	<div class="container">
+      <%= yield %>
+	</div> 
+    <%= render "shared/analytics" %>
+
+  </body>
+</html>

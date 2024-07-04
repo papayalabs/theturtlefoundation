@@ -1,0 +1,60 @@
+	<!-- Footer -->
+	<footer id="footer">
+		<div class="footer-widgets">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+						<div class="widget widget-brand">
+							<div class="logo logo-footer">
+								<%= image_tag(theme_asset_url("images/homeoagora-logo.png"), :alt => "homeoagora") %>
+							</div>
+							<p><%= current_site.the_title %></p>
+						</div><!-- /.widget-brand -->
+						<div class="widget widget-social">
+							<h5 class="widget-title">Follow Us</h5>
+							<div class="social-list">
+								<% current_theme.the_fields_grouped(['social_network_class', 'social_network_url','social_network_name']).each do |group| %>
+									<a href="<%= group['social_network_url'][0] %>"><%= image_tag(theme_asset_url("images/#{group['social_network_name'][0].downcase}.svg"), :alt => "#{group['social_network_name'][0]}") %></a>
+							  	<% end %>								
+							</div>
+							<a class="email" href="#"><%= current_theme.get_option('email_info', 'default_email@example.com') %></a>
+						</div><!-- /.widget-social -->
+					</div><!-- /.col-md-4 -->
+					<div class="col-md-4" data-animation="fadeInUp" data-animation-delay="0.2s" data-animation-offset="75%">
+						<div class="widget widget-twitter">
+							<h5 class="widget-title">Twitter</h5>
+							<div class="latest-tweets" data-number="3" data-username="envato" data-modpath="./twitter/index.php"></div>
+						</div><!-- /.widget-twitter -->
+					</div><!-- /.col-md-4 -->
+					<div class="col-md-2" data-animation="fadeInUp" data-animation-delay="0.4s" data-animation-offset="75%">
+						<div class="widget widget-list">
+							<h5 class="widget-title"><%= current_theme.the_field('common_word_categories', 'Categories') %></h5>
+							<ul class="links-list">
+								<%= render partial: 'shared/categories' %>
+							</ul>
+						</div><!-- /.widget-list -->
+					</div><!-- /.col-md-2 -->
+					<div class="col-md-2" data-animation="fadeInUp" data-animation-delay="0.6s" data-animation-offset="75%">
+						<div class="widget widget-list">
+							<h5 class="widget-title"><%= current_theme.the_field('home_main_site_map', 'Map of the site') %></h5>
+							<ul>
+								<% cama_menu_parse_items(current_site.nav_menus.find_by_slug('main_menu').children).each do |item| %>
+									<li><a href="<%= item[:url] %>"><%= item[:label] %></a></li>
+								<% end %>
+							</ul>
+						</div><!-- /.widget-list -->
+					</div><!-- /.col-md-2 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- /.footer-widgets -->
+		<div class="footer-copyright">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+					Copyright <%= current_site.the_title %> &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</a>
+					</div><!-- /.col-md-12 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div>
+	</footer>
+

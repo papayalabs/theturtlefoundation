@@ -1,0 +1,56 @@
+<div class="header-area">
+    <div class="main-header ">
+        <div class="container-fluid" style="background:black;height:50px">
+            <div style="padding:10px 10px 20px 20px;" >
+                <%= raw current_site.draw_languages("language list-inline pull-left", true) %>
+            </div>
+        </div>
+    </div>
+    <div class="main-header ">
+        <div class="header-bottom  header-sticky">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <!-- Logo -->
+                    <div class="col-xl-2 col-lg-2">
+                        <div class="logo">
+                            <a href="<%= current_site.the_url %>"><img src="<%= current_site.the_logo(theme_asset_url('img/logo/logo.png')) %>" width="400" height="50" alt=" " /></a>
+                        </div>
+                        
+                    </div>
+                    <div class="col-xl-10 col-lg-10">
+                        <div class="menu-wrapper  d-flex align-items-center justify-content-end">
+                            <!-- Main-menu -->
+                            <div class="main-menu d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <% cama_menu_parse_items(current_site.nav_menus.find_by_slug('main_menu').children).each do |item| %>
+                                            <% if current_site.nav_menus.find_by_slug(item[:url].split('/').last) != nil %>
+                                                <li><a href='#'><%= item[:label] %></a>
+                                                    <ul class="submenu">
+                                                    <% cama_menu_parse_items(current_site.nav_menus.find_by_slug(item[:url].split('/').last).children).each do |item| %>
+                                                            <li><a href="<%= item[:url] %>"><%= item[:label] %></a></li>
+                                                        <% end %>
+                                                    </ul>
+                                                </li>
+                                            <% else %>
+                                                <li><a href="<%= item[:url] %>"><%= item[:label] %></a></li>
+                                            <% end %>
+                                        <% end %>                                                                                          
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- Header-btn -->
+                            <div class="header-right-btn d-none d-lg-block ml-20">
+                                <a href="/contact" class="btn header-btn"><%= current_theme.the_field('home_main_donation', 'Make a donation') %></a>
+                            </div>
+                        </div>
+                    </div> 
+                    <!-- Mobile Menu -->
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

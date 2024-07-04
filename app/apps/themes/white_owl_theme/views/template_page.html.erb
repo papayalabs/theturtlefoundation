@@ -1,0 +1,31 @@
+<!--? Hero Start -->
+<div class="slider-area2" style="background-image: url(<%= @post.the_thumb_url(theme_asset_url('img/hero/hero2.png')) %>)">
+    <div class="slider-height2 d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap hero-cap2 pt-70">
+                        <h2><%= @post.the_title %></h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/"><%= current_theme.the_field('common_word_home', 'Home') %></a></li>
+                                <li class="breadcrumb-item"><a href="#"><%= @post.the_title %></a></li> 
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="blog_area single-post-area section-padding">
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-8 posts-list">
+      <div class="single-post">
+      <div class="blog_details">
+       <p>
+         <%= raw @post.the_content %>
+       </p>
+   </div>
+ </div>

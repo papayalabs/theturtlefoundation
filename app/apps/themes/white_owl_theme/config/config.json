@@ -1,0 +1,14 @@
+{
+  "name" : "White Owl Theme",
+  "description" : "",
+  "thumb" : "img/image.png",
+  "helpers": [
+    "Themes::WhiteOwlTheme::MainHelper"
+  ],
+  "hooks": {
+    "on_active": ["white_owl_theme_on_install_theme"],
+    "on_inactive": ["white_owl_theme_on_uninstall_theme"],
+    "on_theme_settings": ["white_owl_theme_settings"]
+    //here all your hooks
+  }
+}

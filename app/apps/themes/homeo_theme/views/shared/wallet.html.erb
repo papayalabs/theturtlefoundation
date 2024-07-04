@@ -1,0 +1,102 @@
+<% content_for :head do %>
+  <title>Wallet</title>
+<% end %>
+<section class="elements-section">
+  <div class="container">
+    <div class="element">
+      <h2>Balance: <%= number_to_currency(@user.balance, :precision => 2, :separator => '.', :unit => '', :delimiter => ',') %> HEAL</h2>
+      </br>
+      <div class="form-group">      
+        <%= label_tag :btc_wallet_address, "Bitcoin Wallet Address" %>
+        <%= text_field_tag 'btc_wallet_address', @btc_wallet, disabled: true, :size => '65', :id => 'btc_address' %>
+        <%= link_to image_tag("blockchain-logo.png", style: 'height:25px;width:auto;', alt: "Blockchain.info"), "https://www.blockchain.com/btc/address/#{@btc_wallet.to_s}", target: :_blank, id: 'btc_address_link' %>
+      </div> 
+      <div id="btc_qrcode"></div>
+      <!-- div class="form-group">      
+        <%= label_tag :eth_active_wallet, "Ethereum Active Wallet" %>
+        <%= select_tag 'eth_active_wallet', options_for_select(@eth_active_wallets.each_with_index.map {|address, index| [index,address]}),  class: 'input-medium', :include_blank => false, :style => "font-size:18px;height:30px;width:40px" %>
+      </div -->    
+      </br>
+      <div class="form-group">      
+        <%= label_tag :eth_wallet_address, "Ethereum Wallet Address" %>
+        <%= text_field_tag 'eth_wallet_address', @eth_active_wallets[0], disabled: true, :size => '65', :id => 'address' %>
+        <%= link_to image_tag("logo-ether.png", style: 'height:25px;width:auto;', alt: "Etherscan"), "https://etherscan.io/address/#{@eth_active_wallets[0].to_s}", target: :_blank, id: 'address_link' %>
+      </div>
+      </br>
+      <div id="eth_qrcode"></div>
+      </br>
+      <div class="form-group">      
+        <%= label_tag :eos_wallet_address, "EOS Wallet Address" %>
+        <%= text_field_tag 'eos_wallet_address', @eos_address, disabled: true, :size => '25', :id => 'address' %>
+        <%= label_tag :eos_wallet_memo, "EOS Wallet Memo" %>
+        <%= text_field_tag 'eos_wallet_memo', @eos_memo, disabled: true, :size => '25', :id => 'memo' %>
+        <%= link_to image_tag("logo-bloksio.png", style: 'height:25px;width:auto;', alt: "Bloks.io"), "https://bloks.io/account/#{@eos_address.to_s}", target: :_blank, id: 'address_link' %>
+      </div>
+      <div class="form-group">      
+        <%= label_tag :telos_wallet_address, "Telos Wallet Address" %>
+        <%= text_field_tag 'telos_wallet_address', @telos_address, disabled: true, :size => '25', :id => 'address' %>
+        <%= label_tag :telos_wallet_memo, "Telos Wallet Memo" %>
+        <%= text_field_tag 'telos_wallet_memo', @telos_memo, disabled: true, :size => '25', :id => 'memo' %>
+        <%= link_to image_tag("logo-bloksio.png", style: 'height:25px;width:auto;', alt: "Bloks.io"), "https://telos.bloks.io/account/#{@telos_address.to_s}", target: :_blank, id: 'address_link' %>
+      </div>
+      </br>
+      <div id="accordion" class="accordion-area">
+        <div class="panel">
+          <div class="panel-header" id="headingOne">
+            <button class="panel-link" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">Recovery Words</button>
+          </div>
+          <div id="collapse1" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="panel-body">
+              <p><%= @words %></p>
+              <%= link_to image_tag("mew.png", style: 'height:25px;width:auto;', alt: "MyEtherWallet"), "https://www.myetherwallet.com/access-my-wallet", target: :_blank %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="accordion" class="accordion-area">
+        <div class="panel">
+          <div class="panel-header" id="headingOne">
+            <button class="panel-link" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse1">Transactions</button>
+          </div>
+          <div id="collapse2" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="panel-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th><%= "Hash" %></th>
+                    <th><%= "Value" %></th>
+                    <th><%= "Message" %></th>    
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% @transactions.each do |t| %>
+                    <tr>
+                      <td><%= t.txn_hash %></td>
+                      <td><%= number_with_precision(t.value, :precision => 10) %></td>
+                      <td><%= t.message %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+<script type="text/javascript">
+  new QRCode(document.getElementById("btc_qrcode"), $(':input[id="btc_address"]').val());
+  new QRCode(document.getElementById("eth_qrcode"), $(':input[id="address"]').val());
+  $(document).ready(function() {
+    $('#eth_active_wallet').on('change', function() {
+      console.log('Change it');
+      var address = $(':input[name="eth_active_wallet"]').val();
+      $(':input[id="address"]').val(address);
+      $("#address_link").attr("href", "https://etherscan.io/address/"+address);
+      document.getElementById("eth_qrcode").innerHTML = "";
+      new QRCode(document.getElementById("eth_qrcode"), $(':input[id="address"]').val());
+      return false;
+    }); 
+  });
+</script>

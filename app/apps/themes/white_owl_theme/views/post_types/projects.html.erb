@@ -1,0 +1,38 @@
+<!--? Hero Start -->
+<div class="slider-area2"">
+    <div class="slider-height2 d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap hero-cap2 pt-70">
+                        <h2><%= current_theme.the_field('common_word_projects', 'Projects') %></h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/"><%= current_theme.the_field('common_word_home', 'Home') %></a></li>
+                                <li class="breadcrumb-item"><a href="#"><%= current_theme.the_field('common_word_projects', 'Projects') %></a></li> 
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="service-area section-padding30">
+    <div class="container">
+        <div class="row">
+            <% @posts.decorate.each do |post| %>
+                <div class="col-lg-4 col-md-6 col-sm-11">
+                    <div class="single-cat text-center mb-30">
+                        <div class="cat-icon">
+                            <img src="<%= post.the_thumb_url(theme_asset_url('img/hero/hero2.png')) %>" alt="">
+                        </div>
+                        <div class="cat-cap">
+                            <h5><a href="<%= post.the_url %>"><%= post.the_title %></a></h5>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
