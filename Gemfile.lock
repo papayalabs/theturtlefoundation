@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/papayalabs/camaleon-cms-7.git
-  revision: df40c487869d2cd66fa52b6f6f0b6fc19b24e914
+  revision: 611b8dad416ee26b4e9de6b83f7305a32983a453
   specs:
     camaleon_cms (2.7.5)
       addressable
