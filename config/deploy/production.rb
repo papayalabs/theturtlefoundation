@@ -16,7 +16,7 @@ set :ssh_options,
 server 'thewhiteowlacademy.com', user: 'theturtlefoundation', roles: %w{app db web}
 
 set :deploy_to, '/var/www/theturtlefoundation'
-#set :branch, 'development'
+set :branch, 'main'
 
 set :stage, 'production'
 
