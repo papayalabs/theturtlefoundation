@@ -7,13 +7,15 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-set :production_proxy_cmd, 'ssh theturtlefoundation@thewhiteowlacademy.com -i ~/.ssh/theturtlefoundation2.pem -W %h:%p'
+set :production_proxy_cmd, "ssh #{Rails.application.secrets.server_user}@#{Rails.application.secrets.server_domain} -i #{Rails.application.secrets.server_key} -W %h:%p"
 
 set :ssh_options,
     proxy: Net::SSH::Proxy::Command.new("#{fetch :production_proxy_cmd}"),
-    keys: ['~/.ssh/theturtlefoundation2.pem']
+    keys: [Rails.application.secrets.server_key]
+    #keys: ['~/.ssh/artsite.pem']
 
-server 'thewhiteowlacademy.com', user: 'theturtlefoundation', roles: %w{app db web}
+#server '146.190.158.230', user: 'artsite', roles: %w{app db web}
+server Rails.application.secrets.server_domain, user: Rails.application.secrets.server_user, roles: %w{app db web}
 
 set :deploy_to, '/var/www/theturtlefoundation'
 set :branch, 'main'
