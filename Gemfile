@@ -93,9 +93,9 @@ gem "select2-rails"
 
 #For Capistrano SSH
 gem 'net-ssh', '>= 6.0.2'
-gem 'ed25519', '>= 1.2', '< 2.0'
+gem 'ed25519', '>= 1.4', '< 2.0'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 
 #Databases
-gem 'mysql2', '>= 0.5.6'
+gem 'pg', '>= 1.1'
 gem "sqlite3", "~> 1.4"
