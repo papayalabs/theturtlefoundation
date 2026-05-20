@@ -56,9 +56,8 @@ newgrp docker
 ## 📁 2. Clonar el proyecto
 
 ```bash
-git clone https://github.com/AITORCIFRA/theturtlefoundation.git
+git clone https://github.com/papayalabs/theturtlefoundation.git
 cd theturtlefoundation
-git checkout Docker
 ```
 
 ---
@@ -76,14 +75,13 @@ Al arrancar automáticamente:
 - Si ya tiene datos → aplica migraciones
 - Nginx sirve la web en HTTP y HTTPS
 
-**Eso es todo. No hay más pasos.** 
+**Eso es todo. No hay más pasos.**
 
 ---
 
 ## 🌐 Acceder a la web
 
 ```
-http://44.213.233.211
 https://fundacionlatortuga.com
 ```
 
@@ -170,14 +168,4 @@ docker compose logs app -f
 sudo ufw allow 80
 sudo ufw allow 443
 sudo ufw enable
-```
-
-**Resetear la DB y reimportar el dump (⚠️ borra todos los datos):**
-```bash
-docker compose down
-docker compose up -d db
-sleep 10
-docker compose exec db psql -U aitor -d postgres -c "DROP DATABASE mibase;"
-docker compose exec db psql -U aitor -d postgres -c "CREATE DATABASE mibase;"
-docker compose up -d
 ```
