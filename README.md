@@ -127,10 +127,10 @@ docker compose up -d
 docker compose exec app bash
 
 # Entrar a la DB
-docker compose exec db psql -U aitor -d mibase
+docker compose exec db psql -U turtle_user -d theturtlefoundation
 
 # Ver cuántos posts tiene la DB
-docker compose exec db psql -U aitor -d mibase -c "SELECT COUNT(*) FROM posts;"
+docker compose exec db psql -U turtle_user -d theturtlefoundation -c "SELECT COUNT(*) FROM posts;"
 ```
 
 ---
