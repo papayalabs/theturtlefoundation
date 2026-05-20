@@ -76,7 +76,7 @@ Al arrancar automáticamente:
 - Si ya tiene datos → aplica migraciones
 - Nginx sirve la web en HTTP y HTTPS
 
-**Eso es todo. No hay más pasos.** 🗿
+**Eso es todo. No hay más pasos.** 
 
 ---
 
