@@ -1,0 +1,39 @@
+# Git
+.git
+.gitignore
+
+# Logs y tmp
+log/*
+tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Assets compilados (se regeneran en el build)
+public/assets
+public/packs
+
+# Storage local
+storage/*
+!/storage/.keep
+
+# Node modules
+node_modules
+
+# Backups (bro no metas esto en la imagen fr fr)
+
+# Config sensible
+.env
+.env.*
+!.env.example
+
+# Docs
+README.md
+*.md
+
+# Tests
+spec/
+test/
+
+# Docker files propios (evita loops raros)
+Dockerfile*
+docker-compose*
