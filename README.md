@@ -15,7 +15,10 @@ Todo corre en Docker. En el servidor solo hace falta instalar Docker, clonar el 
 
 ---
 
-## 🔑 Conectarse al servidor
+## 🔑 Crear y conectarse al servidor
+
+Hace falta crear un servidor ubuntu con una IP y una llave(ej. 44.213.233.211 y turtle.pem) y apuntar los DNS
+del domain fundacionlatortuga.com a ese IP
 
 ```bash
 # Dar permisos correctos al .pem (solo la primera vez)
