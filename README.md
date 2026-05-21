@@ -1,35 +1,21 @@
 # 🐢 The Turtle Foundation — Despliegue en Servidor
 
-Stack: **Ruby on Rails + PostgreSQL + Nginx + SSL**
+Stack: **Ruby on Rails + PostgreSQL + Nginx + SSL (Let's Encrypt)**
 
-Todo corre en Docker. En el servidor solo hace falta instalar Docker, clonar el repo y hacer `docker compose up -d`. La base de datos se importa automática. No cap.
-
----
-
-## 📋 Requisitos previos
-
-- Servidor Ubuntu 22.04+ con acceso SSH
-- Archivo `turtle.pem` para conectarse al servidor
-- Docker instalado en el servidor
-- Puertos 80 y 443 abiertos en el firewall
+Con solo 3 comandos en el servidor la web está viva con HTTPS. No cap.
 
 ---
 
 ## 🔑 Conectarse al servidor
 
 ```bash
-# Dar permisos correctos al .pem (solo la primera vez)
-chmod 400 /ruta/a/turtle.pem
-
-# Conectarse
-ssh -i /ruta/a/turtle.pem ubuntu@44.213.233.211
+chmod 400 turtle.pem
+ssh -i turtle.pem ubuntu@<IP_DEL_SERVIDOR>
 ```
 
 ---
 
-## 🖥️ 1. Instalar Docker en el servidor
-
-Conectado por SSH, ejecutar:
+## 🖥️ 1. Instalar Docker
 
 ```bash
 sudo apt-get update
@@ -44,8 +30,6 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-
-# Habilitar Docker al arranque del servidor
 sudo systemctl enable docker
 sudo usermod -aG docker $USER
 newgrp docker
@@ -69,46 +53,52 @@ git checkout Docker
 docker compose up -d
 ```
 
-Al arrancar automáticamente:
-- PostgreSQL se inicializa
-- Rails espera a la DB
-- Si la DB está vacía → importa el dump automáticamente
-- Si ya tiene datos → aplica migraciones
-- Nginx sirve la web en HTTP y HTTPS
-
-**Eso es todo. No hay más pasos.** 
+Automáticamente:
+- PostgreSQL arranca ✅
+- Rails espera la DB ✅
+- DB vacía → importa dump automático ✅
+- DB con datos → aplica migraciones ✅
+- Web disponible en `http://<IP>` ✅
 
 ---
 
-## 🌐 Acceder a la web
+## 🔐 4. Activar HTTPS (solo una vez por servidor)
 
+> ⚠️ El dominio debe apuntar a la IP del servidor antes de este paso
+
+```bash
+chmod +x init-ssl.sh
+./init-ssl.sh admin@fundacionlatortuga.com
 ```
-http://44.213.233.211
-https://fundacionlatortuga.com
-```
+
+El script:
+1. Arranca nginx en HTTP
+2. Pide los certs a Let's Encrypt (gratis)
+3. Activa nginx con HTTPS
+
+Web disponible en `https://fundacionlatortuga.com` ✅
+
+Los certs se renuevan automáticamente cada 12h gracias al contenedor certbot.
 
 ---
 
-## 🔄 Arranque automático
+## 🔄 Arranque automático del servidor
 
-Docker arranca solo cuando enciende el servidor gracias a `sudo systemctl enable docker`.
-Los contenedores se levantan solos gracias al `restart: unless-stopped` del compose.
-
-No hay que hacer nada manual al reiniciar el servidor.
+Docker y los contenedores arrancan solos al encender el servidor. No hay que hacer nada manual.
 
 ---
 
 ## 📊 Comandos útiles
 
 ```bash
-# Ver estado de los contenedores
+# Ver estado
 docker compose ps
 
-# Ver logs en tiempo real
+# Logs en tiempo real
 docker compose logs -f app
 docker compose logs -f nginx
 
-# Reiniciar solo la app
+# Reiniciar app
 docker compose restart app
 
 # Parar todo
@@ -117,67 +107,65 @@ docker compose down
 # Arrancar todo
 docker compose up -d
 
-# Rebuild completo (tras cambios en el código)
+# Rebuild tras cambios en el código
 docker compose down
 docker compose build --no-cache
 docker compose up -d
 
-# Entrar al contenedor de Rails
+# Entrar al contenedor Rails
 docker compose exec app bash
 
-# Entrar a la DB
-docker compose exec db psql -U aitor -d mibase
+# Ver datos en la DB
+docker compose exec db psql -U turtle_user -d theturtlefoundation -c "SELECT COUNT(*) FROM posts;"
 
-# Ver cuántos posts tiene la DB
-docker compose exec db psql -U aitor -d mibase -c "SELECT COUNT(*) FROM posts;"
+# Resetear DB y reimportar dump (⚠️ borra datos)
+docker compose down
+docker compose up -d db
+sleep 10
+docker compose exec db psql -U turtle_user -d postgres -c "DROP DATABASE theturtlefoundation;"
+docker compose up -d
 ```
 
 ---
 
-## 📁 Estructura del proyecto
+## 📁 Estructura
 
 ```
 theturtlefoundation/
-├── Dockerfile                            ← imagen de Rails
-├── docker-compose.yml                    ← orquestación de contenedores
-├── docker-entrypoint.sh                  ← espera DB, importa dump si vacía y arranca
-├── .dockerignore                         ← archivos ignorados en el build
-├── backup_postgres_2024_amazon.dump.sql  ← dump de la DB real (se importa automático)
+├── Dockerfile                            ← imagen Rails
+├── docker-compose.yml                    ← orquestación
+├── docker-entrypoint.sh                  ← espera DB, importa dump y arranca
+├── init-ssl.sh                           ← genera certs SSL (1 vez por servidor)
+├── .dockerignore
+├── backup_postgres_2024_amazon.dump.sql  ← dump DB (importa automático)
 └── nginx/
-    ├── nginx.conf                        ← config de nginx con SSL
-    └── ssl/
-        ├── fullchain.pem                 ← certificado SSL
-        ├── privkey.pem                   ← clave privada SSL
-        └── ssl-dhparams.pem              ← parámetros Diffie-Hellman
+    ├── nginx.conf                        ← config activa
+    ├── nginx-http.conf                   ← config HTTP (usada por init-ssl.sh)
+    └── nginx-ssl.conf                    ← config HTTPS (activada tras SSL)
 ```
 
 ---
 
 ## 🆘 Troubleshooting
 
+**Nginx no encuentra los certificados:**
+```bash
+./init-ssl.sh admin@fundacionlatortuga.com
+```
+
 **La app no arranca:**
 ```bash
 docker compose logs app --tail=50
 ```
 
-**Nginx da error 502:**
-```bash
-docker compose logs app -f
-```
-
-**El puerto 80/443 no es accesible:**
+**Puerto 80/443 no accesible:**
 ```bash
 sudo ufw allow 80
 sudo ufw allow 443
 sudo ufw enable
 ```
 
-**Resetear la DB y reimportar el dump (⚠️ borra todos los datos):**
+**Permission denied en carpeta ssl:**
 ```bash
-docker compose down
-docker compose up -d db
-sleep 10
-docker compose exec db psql -U aitor -d postgres -c "DROP DATABASE mibase;"
-docker compose exec db psql -U aitor -d postgres -c "CREATE DATABASE mibase;"
-docker compose up -d
+sudo chown -R ubuntu:ubuntu nginx/ssl/
 ```
