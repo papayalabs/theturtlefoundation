@@ -97,5 +97,5 @@ gem 'ed25519', '>= 1.4', '< 2.0'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 
 #Databases
-gem 'pg', '>= 1.1'
+gem 'mysql2', '>= 0.5'
 gem "sqlite3", "~> 1.4"

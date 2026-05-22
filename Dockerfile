@@ -3,7 +3,7 @@ FROM ruby:3.2.0-slim AS builder
 
 RUN apt-get update -qq && apt-get install -y \
   build-essential \
-  libpq-dev \
+  default-libmysqlclient-dev \
   nodejs \
   npm \
   curl \
@@ -27,8 +27,7 @@ RUN SECRET_KEY_BASE=dummykey RAILS_ENV=production bundle exec rails assets:preco
 FROM ruby:3.2.0-slim AS runtime
 
 RUN apt-get update -qq && apt-get install -y \
-  libpq-dev \
-  postgresql-client \
+  default-mysql-client \
   libvips \
   curl \
   && rm -rf /var/lib/apt/lists/*

@@ -1,20 +1,20 @@
 #!/bin/bash
 set -e
 
-echo "⏳ Esperando a PostgreSQL..."
-until PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" -c '\q' 2>/dev/null; do
+echo "⏳ Esperando a MySQL..."
+until mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" -e "SELECT 1" &>/dev/null; do
   echo "   esperando..."
   sleep 2
 done
 
-echo "✅ PostgreSQL listo..."
+echo "✅ MySQL listo..."
 
 # Comprobar si la DB está vacía (sin tablas)
-TABLES=$(PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" -t -c "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public';" | xargs)
+TABLES=$(mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" -s --skip-column-names -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '$DB_NAME';" 2>/dev/null)
 
 if [ "$TABLES" -eq "0" ]; then
   echo "📦 DB vacía, importando dump..."
-  PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" < /app/backup_postgres_2024_amazon.dump.sql
+  mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" < /app/backup_mysql_2024_amazon.sql
   echo "✅ Dump importado!"
 else
   echo "✅ DB ya tiene datos, aplicando migraciones..."

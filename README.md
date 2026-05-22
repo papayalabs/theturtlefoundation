@@ -1,6 +1,6 @@
 # 🐢 Fundación La Tortuga — Despliegue en Servidor
 
-Stack: **Ruby on Rails + PostgreSQL + Nginx + SSL**
+Stack: **Ruby on Rails + MySQL + Nginx + SSL**
 
 Todo corre en Docker. En el servidor solo hace falta instalar Docker, clonar el repo y hacer `docker compose up -d`. La base de datos se importa automática. No cap.
 
@@ -72,7 +72,7 @@ docker compose up -d
 ```
 
 Al arrancar automáticamente:
-- PostgreSQL se inicializa
+- MySQL se inicializa
 - Rails espera a la DB
 - Si la DB está vacía → importa el dump automáticamente
 - Si ya tiene datos → aplica migraciones
@@ -127,10 +127,10 @@ docker compose up -d
 docker compose exec app bash
 
 # Entrar a la DB
-docker compose exec db psql -U turtle_user -d theturtlefoundation
+docker compose exec db mysql -u turtle_user -p theturtlefoundation
 
 # Ver cuántos posts tiene la DB
-docker compose exec db psql -U turtle_user -d theturtlefoundation -c "SELECT COUNT(*) FROM posts;"
+docker compose exec db mysql -u turtle_user -p theturtlefoundation -e "SELECT COUNT(*) FROM posts;"
 ```
 
 ---
@@ -143,7 +143,7 @@ theturtlefoundation/
 ├── docker-compose.yml                    ← orquestación de contenedores
 ├── docker-entrypoint.sh                  ← espera DB, importa dump si vacía y arranca
 ├── .dockerignore                         ← archivos ignorados en el build
-├── backup_postgres_2024_amazon.dump.sql  ← dump de la DB real (se importa automático)
+├── backup_mysql_2024_amazon.sql          ← dump de la DB real (se importa automático)
 └── nginx/
     ├── nginx.conf                        ← config de nginx con SSL
     └── ssl/
