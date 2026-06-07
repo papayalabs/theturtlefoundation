@@ -76,18 +76,18 @@ group :test do
 
 end
 
-gem "camaleon_cms", github: 'papayalabs/camaleon-cms-7' #path: "/Users/papayalabs/Github/camaleon-cms" #' # latest development version 
+gem "camaleon_cms", github: 'papayalabs/camaleon-cms-7' #path: "/Users/papayalabs/Github/camaleon-cms" #' # latest development version
 
 
-#################### Camaleon CMS include all gems for plugins and themes #################### 
-require_relative './lib/plugin_routes' 
+#################### Camaleon CMS include all gems for plugins and themes ####################
+require_relative './lib/plugin_routes'
 instance_eval(PluginRoutes.draw_gems)
 
 gem 'unicorn-rails'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'draper', '>= 3' # for Rails 5+
-gem 'jquery-rails' 
+gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem "select2-rails"
 
